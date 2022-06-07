@@ -44,3 +44,22 @@ li{
 .carousel-caption h4 {
   color: #fff;
 }
+
+
+.payment-container{
+  /* width: 500px;
+  height: 100vh; */
+  display: none;
+}
+.payment-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.active{
+  display: block;
+  margin-top: 0;
+}
+.inactive{
+  display: none;
+}

@@ -19,10 +19,13 @@ import {
     part2CreateReducer,
     part3CreateReducer,
     part4CreateReducer,
+    part5CreateReducer,
     part1GetReducer,
     part2GetReducer,
     part3GetReducer,
     part4GetReducer,
+    part5GetReducer,
+    myPart5GetReducer,
 
     } from "./reducers/partsReducers"
 
@@ -42,10 +45,13 @@ const reducer=combineReducers({
     part2Create:part2CreateReducer,
     part3Create:part3CreateReducer,
     part4Create:part4CreateReducer,
+    part5Create:part5CreateReducer,
     part1:part1GetReducer,
     part2:part2GetReducer,
     part3:part3GetReducer,
     part4:part4GetReducer,
+    part5:part5GetReducer,
+    mypart5:myPart5GetReducer,
 
    
 })

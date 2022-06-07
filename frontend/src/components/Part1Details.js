@@ -1,16 +1,18 @@
 import FormContainer from "../components/FormContainer"
 import ApplicationDetailsSteps from "../components/ApplicationDetailsSteps"
 import { Row,Button,Col,Form} from "react-bootstrap";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {useDispatch,useSelector} from "react-redux"
 import DatePicker from 'react-date-picker';
 import React, { useState,useEffect } from 'react';
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { getPart1 } from "../actions/partsAction";
+import { PART1_GET_RESET } from "../constants/partsContants";
 
 
 const Part1Details=()=>{
+  const params=useParams()
     const navigate=useNavigate() 
     const dispatch=useDispatch();
     const Mypart1=useSelector((state)=>state.part1);
@@ -72,8 +74,8 @@ const Part1Details=()=>{
     })
 }  
        useEffect(()=>{
-
-        dispatch(getPart1());
+        dispatch({type:PART1_GET_RESET})
+        dispatch(getPart1(params.user));
         
         if(part1){
         setState({
@@ -122,7 +124,7 @@ const Part1Details=()=>{
         })
       }
     
-       },[dispatch])
+       },[dispatch,params.user])
  
       // console.log(state)
 

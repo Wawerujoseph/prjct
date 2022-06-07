@@ -57,7 +57,7 @@ function App() {
           <Route path="/userlist" element={<UserListScreen/>}/>
           <Route path="/user/:id/edit" element={<UserEditScreen/>}/>   
           <Route path="/applications" element={<ApplicationScreen/>} />   
-          <Route path="/applications/:id" element={<ApplicationDetailScreen/>} />   
+          <Route path="/applications/:user" element={<ApplicationDetailScreen/>} />   
 
           {/* END ADMIN */}
        

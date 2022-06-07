@@ -1,15 +1,17 @@
 import FormContainer from "./FormContainer"
 import { Row,Button,Col,Form} from "react-bootstrap";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {getPart2} from "../actions/partsAction"
 import {useDispatch,useSelector} from "react-redux"
 import EContactForm from "./EContactForm";
 import { useState,useEffect } from "react";
 import Message from "./Message"
 import Loader from "./Loader";
+import { PART2_GET_RESET } from "../constants/partsContants";
 
 
 const Part2Details=()=>{
+    const params=useParams();
     const navigate=useNavigate()
     const dispatch=useDispatch();
     const Mypart2=useSelector((state)=>state.part2);
@@ -59,7 +61,8 @@ const Part2Details=()=>{
     // console.log(state2)
     // console.log(part2)
     useEffect(()=>{
-        dispatch(getPart2())
+        dispatch({type:PART2_GET_RESET})
+        dispatch(getPart2(params.user))
         console.log(part2)
         if(part2?.length > 0){
             setState1({
@@ -83,7 +86,7 @@ const Part2Details=()=>{
                 "email":part2[1].email,
             })
         }
-    },[dispatch])
+    },[dispatch,params.user])
 
 
     return(

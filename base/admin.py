@@ -6,4 +6,5 @@ admin.site.register(Part1)
 admin.site.register(Part2)
 admin.site.register(Part3)
 admin.site.register(Part4)
+admin.site.register(Part5)
 

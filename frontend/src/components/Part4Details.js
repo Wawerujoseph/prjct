@@ -1,15 +1,17 @@
 import FormContainer from "./FormContainer"
 import { Button,Card,CardGroup,Row,Col, Image} from "react-bootstrap";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import ImageUploader from "react-images-upload";
 import ImageUploading from 'react-images-uploading';
 import React, { useEffect, useState } from 'react';
 import Message from "./Message"
 import {getPart4} from "../actions/partsAction"
 import {useSelector,useDispatch} from "react-redux"
+import { PART4_GET_RESET } from "../constants/partsContants";
 
 
 const Part4Details=()=>{
+  const params=useParams();
     const l=["ID Card Front","ID Card Back","passport size photo","Birth Certificate","Marriage Certificate"]
     const navigate=useNavigate()
     const [images, setImages] = useState({
@@ -32,7 +34,8 @@ const Part4Details=()=>{
 
       const url="http://127.0.0.1:8000";
       useEffect(()=>{
-        dispatch(getPart4())
+        dispatch({type:PART4_GET_RESET})
+        dispatch(getPart4(params.user))
         if(success){
           setImages({
             "u_id_front":url+part4.u_id_front,
@@ -49,7 +52,7 @@ const Part4Details=()=>{
             "r_photo":url+part4.r_photo,
               });          
         }
-      },[dispatch])
+      },[dispatch,params.user])
 
     return(
         <>

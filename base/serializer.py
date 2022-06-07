@@ -63,6 +63,17 @@ class Part4Serializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class Part5Serializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Part5
         fields = '__all__'
+    def get_user(self, obj):
+        user = obj.user
+        serializer = UserSerializer(user, many=False)
+        return serializer.data
+        
+class MYPart5Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Part5
+        fields = '__all__'
+   

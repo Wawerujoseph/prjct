@@ -1,18 +1,19 @@
 import FormContainer from "./FormContainer"
 import { Row,Button,Col,Form} from "react-bootstrap";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {getPart3} from "../actions/partsAction"
 import {useDispatch,useSelector} from "react-redux"
 import { useEffect, useState } from "react";
 import Message from "./Message"
 import Loader from "./Loader"
+import { PART3_GET_RESET } from "../constants/partsContants";
 
 const Part3Details=()=>{
+    const params=useParams();
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const Mypart3=useSelector(state=>state.part3)
     const {part3,error,success,loading}=Mypart3;
-
     const [state,setState]=useState({
         "name":"",
         "job":"",
@@ -33,7 +34,8 @@ const Part3Details=()=>{
     // console.log(state)
     // console.log(part3)
     useEffect(()=>{
-        dispatch(getPart3())
+        dispatch({type:PART3_GET_RESET})
+        dispatch(getPart3(params.user))
         if(success){        
             setState({
                 "name":part3.name,
@@ -45,7 +47,7 @@ const Part3Details=()=>{
             })
         }
 
-    },[dispatch])
+    },[dispatch,params.user])
 
 
     return(

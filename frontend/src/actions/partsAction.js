@@ -8,6 +8,8 @@ import {
     PART2_GET_REQUEST,PART2_GET_SUCCESS,PART2_GET_FAIL,  
     PART3_GET_REQUEST,PART3_GET_SUCCESS,PART3_GET_FAIL,  
     PART4_GET_REQUEST,PART4_GET_SUCCESS,PART4_GET_FAIL,  
+    PART5_GET_REQUEST,PART5_GET_SUCCESS,PART5_GET_FAIL,  
+    MY_PART5_GET_REQUEST,MY_PART5_GET_SUCCESS,MY_PART5_GET_FAIL,  
 
  } from "../constants/partsContants"
 
@@ -139,8 +141,37 @@ import {
         }
        }
 
+       export const createPart5=(part5)=> async(dispatch,getState)=>{
+        try{
+            dispatch({
+                type:PART5_CREATE_REQUEST
+            })
+            const {userLogin:{userInfor}}=getState()
+            const config={
+                headers:{
+                    'Content-type':'application/json',
+                    Authorization:`Bearer ${userInfor.token}`
+                }
+            }
+            const {data}=await axios.post('http://127.0.0.1:8000/parts/create_part5/',part5,config)          
+            dispatch({
+               type:PART5_CREATE_SUCCESS,
+               payload:data
+           })
+    
+   
+        }catch(error){
+            dispatch({
+                type:PART5_CREATE_FAIL,
+                payload:error.response && error.response.data.detail
+                ? error.response.data.detail
+                :error.message
+            })
+        }
+       }
+
            
-       export const getPart1=()=> async(dispatch,getState)=>{
+       export const getPart1=(user)=> async(dispatch,getState)=>{
         try{
             dispatch({
                 type:PART1_GET_REQUEST
@@ -152,7 +183,7 @@ import {
                     Authorization:`Bearer ${userInfor.token}`
                 }
             }
-            const {data}=await axios.get("http://127.0.0.1:8000/parts/get_my_part1/",config)        
+            const {data}=await axios.get(`http://127.0.0.1:8000/parts/get_my_part1/${user}`,config)        
             dispatch({
                type:PART1_GET_SUCCESS,
                payload:data
@@ -169,7 +200,7 @@ import {
         }
        }
 
-       export const getPart2=()=> async(dispatch,getState)=>{
+       export const getPart2=(user)=> async(dispatch,getState)=>{
         try{
             dispatch({
                 type:PART2_GET_REQUEST
@@ -181,7 +212,7 @@ import {
                     Authorization:`Bearer ${userInfor.token}`
                 }
             }
-            const {data}=await axios.get("http://127.0.0.1:8000/parts/get_my_part2/",config)        
+            const {data}=await axios.get(`http://127.0.0.1:8000/parts/get_my_part2/${user}`,config)        
             dispatch({
                type:PART2_GET_SUCCESS,
                payload:data
@@ -198,7 +229,7 @@ import {
         }
        }
 
-       export const getPart3=()=> async(dispatch,getState)=>{
+       export const getPart3=(user)=> async(dispatch,getState)=>{
         try{
             dispatch({
                 type:PART3_GET_REQUEST
@@ -210,7 +241,7 @@ import {
                     Authorization:`Bearer ${userInfor.token}`
                 }
             }
-            const {data}=await axios.get("http://127.0.0.1:8000/parts/get_my_part3/",config)        
+            const {data}=await axios.get(`http://127.0.0.1:8000/parts/get_my_part3/${user}`,config)        
             dispatch({
                type:PART3_GET_SUCCESS,
                payload:data
@@ -227,7 +258,7 @@ import {
         }
        }
 
-       export const getPart4=()=> async(dispatch,getState)=>{
+       export const getPart4=(user)=> async(dispatch,getState)=>{
         try{
             dispatch({
                 type:PART4_GET_REQUEST
@@ -239,7 +270,7 @@ import {
                     Authorization:`Bearer ${userInfor.token}`
                 }
             }
-            const {data}=await axios.get("http://127.0.0.1:8000/parts/get_my_part4/",config)        
+            const {data}=await axios.get(`http://127.0.0.1:8000/parts/get_my_part4/${user}`,config)        
             dispatch({
                type:PART4_GET_SUCCESS,
                payload:data
@@ -249,6 +280,64 @@ import {
         }catch(error){
             dispatch({
                 type:PART4_GET_FAIL,
+                payload:error.response && error.response.data.detail
+                ? error.response.data.detail
+                :error.message
+            })
+        }
+       }
+
+       export const getPart5=()=> async(dispatch,getState)=>{
+        try{
+            dispatch({
+                type:PART5_GET_REQUEST
+            })
+            const {userLogin:{userInfor}}=getState()
+            const config={
+                headers:{
+                    'Content-type':'multipart/form-data',
+                    Authorization:`Bearer ${userInfor.token}`
+                }
+            }
+            const {data}=await axios.get("http://127.0.0.1:8000/parts/get_part5/",config)        
+            dispatch({
+               type:PART5_GET_SUCCESS,
+               payload:data
+           })
+    
+   
+        }catch(error){
+            dispatch({
+                type:PART5_GET_FAIL,
+                payload:error.response && error.response.data.detail
+                ? error.response.data.detail
+                :error.message
+            })
+        }
+       }
+
+       export const getMyPart5=(user)=> async(dispatch,getState)=>{
+        try{
+            dispatch({
+                type:MY_PART5_GET_REQUEST
+            })
+            const {userLogin:{userInfor}}=getState()
+            const config={
+                headers:{
+                    'Content-type':'multipart/form-data',
+                    Authorization:`Bearer ${userInfor.token}`
+                }
+            }
+            const {data}=await axios.get(`http://127.0.0.1:8000/parts/get_my_part5/${user}/`,config)        
+            dispatch({
+               type:MY_PART5_GET_SUCCESS,
+               payload:data
+           })
+    
+   
+        }catch(error){
+            dispatch({
+                type:MY_PART5_GET_FAIL,
                 payload:error.response && error.response.data.detail
                 ? error.response.data.detail
                 :error.message
