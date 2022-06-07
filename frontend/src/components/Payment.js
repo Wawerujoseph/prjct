@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import { useDispatch,useSelector} from "react-redux"
 import {createPart5} from "../actions/partsAction"
 import Message from "../components/Message"
+import Tost from "../components/Tost"
+
 
 
 const Payment=({price,show,setShow,state})=>{
@@ -14,8 +16,8 @@ const Payment=({price,show,setShow,state})=>{
 
     const handleClick=()=>{
         dispatch(createPart5(state));
-        // setShow(false);
-        // navigate("/");
+        setShow(false);
+        navigate("/");
     }
     const closeHandler=()=>{
         setShow(false);
@@ -23,8 +25,8 @@ const Payment=({price,show,setShow,state})=>{
     return(
         <FormContainer>
             <div className={show ? "payment-container active" : "payment-container"}>
-            {success && <Message variant='success'>Application Completed successful!</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
+            {success && <Tost variant={'success'} >Application completed successful!</Tost>}
+            {error && <Tost variant={'danger'} >{error}</Tost>}
                <div className="payment-header">
                    <h2>Make payment to complete your application</h2>
                    <i onClick={closeHandler}>x</i>

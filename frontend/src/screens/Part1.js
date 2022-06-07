@@ -7,6 +7,7 @@ import {useDispatch,useSelector} from "react-redux"
 import DatePicker from 'react-date-picker';
 import React, { useState,useEffect } from 'react';
 import Message from "../components/Message"
+import Tost from "../components/Tost"
 
 
 const Part1=()=>{
@@ -88,9 +89,9 @@ const Part1=()=>{
         <>
             <ApplicationSteps step1 step2 step3/>
             <h1>Section 1</h1>
-            <Row>
-            {success && <Message variant='success'>Part3 Details Submited successful!</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
+            {success && <Tost variant={'success'} >Part1 Details Submited successful!</Tost>}
+            {error && <Tost variant={'danger'} >{error}</Tost>}
+            <Row>           
                 <Col>
 
                 <Form.Group controlId='name'>
@@ -699,7 +700,8 @@ const Part1=()=>{
               
                 </Col>
             </Row>
-            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Continue</Button>
+            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            <Button onClick={()=>navigate("/part2")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
         </>
     )
 }

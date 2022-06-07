@@ -52,7 +52,7 @@ const Part4Details=()=>{
             "r_photo":url+part4.r_photo,
               });          
         }
-      },[dispatch,params.user])
+      },[dispatch,params.user,images])
 
     return(
         <>

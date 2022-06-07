@@ -86,7 +86,7 @@ const Part2Details=()=>{
                 "email":part2[1].email,
             })
         }
-    },[dispatch,params.user])
+    },[dispatch,params.user,state1,state2])
 
 
     return(

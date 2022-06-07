@@ -8,6 +8,8 @@ import React, { useState } from 'react';
 import Message from "../components/Message"
 import {createPart4} from "../actions/partsAction"
 import {useSelector,useDispatch} from "react-redux"
+import Tost from "../components/Tost"
+
 
 
 const Part4=()=>{
@@ -94,8 +96,8 @@ const Part4=()=>{
                 </ul>                
             </Col>                         
                     
-            {success && <Message variant='success'>Images uploaded successful!</Message>}
-           {error && <Message variant='danger'>{error}</Message>}
+            {success && <Tost variant={'success'} >Part4 Details Submited successful!</Tost>}
+            {error && <Tost variant={'danger'} >{error}</Tost>}
               </Row>
             
             {/* <div>
@@ -251,7 +253,9 @@ const Part4=()=>{
                 </ImageUploading>
                 </div>
                 
-            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Continue</Button>
+            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            <Button onClick={()=>navigate("/part5")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
+
         </>
     )
     

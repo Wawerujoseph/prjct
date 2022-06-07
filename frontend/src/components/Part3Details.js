@@ -47,7 +47,7 @@ const Part3Details=()=>{
             })
         }
 
-    },[dispatch,params.user])
+    },[dispatch,params.user,state])
 
 
     return(

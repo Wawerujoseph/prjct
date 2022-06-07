@@ -6,6 +6,8 @@ import {createPart3} from "../actions/partsAction"
 import {useDispatch,useSelector} from "react-redux"
 import { useEffect, useState } from "react";
 import Message from "../components/Message"
+import Tost from "../components/Tost"
+
 
 const Part3=()=>{
     const navigate=useNavigate()
@@ -62,8 +64,8 @@ const Part3=()=>{
 
           
             <Row>
-            {success && <Message variant='success'>Part3 Details Submited successful!</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
+            {success && <Tost variant={'success'} >Part3 Details Submited successful!</Tost>}
+            {error && <Tost variant={'danger'} >{error}</Tost>}
 
                 <Col>
                 <Form.Group controlId='name'>
@@ -168,11 +170,11 @@ const Part3=()=>{
                
                 </Col>
             </Row>
+       
+           
+           <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+           <Button onClick={()=>navigate("/part4")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
 
-
-
-         
-            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Continue</Button>
         </>
     )
     

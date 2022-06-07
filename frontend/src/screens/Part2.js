@@ -7,6 +7,8 @@ import {useDispatch,useSelector} from "react-redux"
 import EContactForm from "../components/EContactForm";
 import { useState,useEffect } from "react";
 import Message from "../components/Message"
+import Tost from "../components/Tost"
+
 
 
 const Part2=()=>{
@@ -81,8 +83,8 @@ const Part2=()=>{
                 <span>Particulars of Next of Kin (Person who may be contacted in case of emergency)</span>
             </h4>
             <Row>
-            {success && <Message variant='success'>Part3 Details Submited successful!</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
+            {success && <Tost variant={'success'} >Part2 Details Submited successful!</Tost>}
+            {error && <Tost variant={'danger'} >{error}</Tost>}
                 <Col>
                   <EContactForm part={'a)'} handleChange1={handleChange1} state1={state1}/>
                 </Col>
@@ -94,7 +96,9 @@ const Part2=()=>{
 
 
          
-            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Continue</Button>
+            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            <Button onClick={()=>navigate("/part3")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
+
         </>
     )
     
