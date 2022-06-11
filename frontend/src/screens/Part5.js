@@ -1,17 +1,38 @@
-import { useState } from "react"
+import { useState ,useEffect} from "react"
 import {Container,Table,Button} from "react-bootstrap"
 import {LinkContainer} from "react-router-bootstrap"
 import Payment from "../components/Payment";
+import {createPart5,getMyPart5} from "../actions/partsAction"
+import Tost from "../components/Tost"
+import { useDispatch,useSelector} from "react-redux"
+import {useNavigate} from "react-router-dom";
+
 
 const Part5=()=>{
     const [price,setPrice]=useState('');
     const [show,setShow]=useState(false);
+    const navigate=useNavigate();
+    const dispatch=useDispatch()
+
+    const  userLogin=useSelector(state=>state.userLogin)
+    const {userInfor} =userLogin;
+
+    const Mypart5=useSelector(state=>state.mypart5)
+    const {mypart5,error:part5_error,success:part5_success,loading:part5_loading}=Mypart5;
+
+    const part5Create=useSelector(state=>state.part5Create)
+    const {part5,error,success}=part5Create;
 
     const [state,setState]=useState({
         "type":"",
         "number_pages":"",
         "amount":"",
     });
+
+    useEffect(()=>{
+        dispatch(getMyPart5(userInfor._id));
+      
+    },[userInfor._id]);
     
     const handleClick=(num)=>{
 
@@ -22,6 +43,14 @@ const Part5=()=>{
         });
         setShow(true);
 
+        if(mypart5){
+            setState({
+                "type":mypart5.Type,
+                "number_pages":mypart5.number_pages,
+                "amount":mypart5.amount
+            });
+        }else{     
+
         if(num === 1.0){
 
         setState({
@@ -29,7 +58,6 @@ const Part5=()=>{
                 "number_pages":"A Series (34 pages)",
                 "amount":"Ksh. 4,550.00",
             });
-           setPrice("Ksh. 4,550.00")
             
         }else if(num === 1.1){
             setState({
@@ -37,7 +65,6 @@ const Part5=()=>{
                 "number_pages":"B Series (30 pages)",
                 "amount":"Ksh. 6,050.00",
             });
-            setPrice("Ksh. 6,050.00")
 
 
         }else if(num ===1.2){
@@ -46,7 +73,6 @@ const Part5=()=>{
                 "number_pages":"C Series (66 pages)",
                 "amount":"Ksh. 4,550.00",
             });
-            setPrice("Ksh. 4,550.00")
 
         }else if(num ===2){
             setState({
@@ -54,7 +80,6 @@ const Part5=()=>{
                 "number_pages":"",
                 "amount":"Ksh. 7,550.00",
             });
-            setPrice("Ksh. 7,550.00")
 
         }else if(num ===3){
             setState({
@@ -62,7 +87,6 @@ const Part5=()=>{
                 "number_pages":"",
                 "amount":"Ksh. 7,550.00",
             });
-            setPrice("Ksh. 7,550.00")
 
         }else if(num ===4){
             setState({
@@ -70,7 +94,6 @@ const Part5=()=>{
                 "number_pages":"",
                 "amount":"Ksh. 12,050.00",
             });
-            setPrice("Ksh. 12,050.00")
 
         }else if(num ===5){
             setState({
@@ -78,7 +101,6 @@ const Part5=()=>{
                 "number_pages":"",
                 "amount":"Ksh. 3,050.00",
             });
-            setPrice("Ksh. 3,050.00")
 
         }else if(num ===6){
             setState({
@@ -86,15 +108,25 @@ const Part5=()=>{
                 "number_pages":"",
                 "amount":"Ksh. 350",
             });
-            setPrice("Ksh. 350")
 
         }else{
             console.log("Invalid option")
         }
     }
 
+        if(state){
+            dispatch(createPart5(state));
+            if(success){
+                setShow(true)
+            }
+
+        }
+    }
+
     return(
         <Container>
+              {success && <Tost variant={'success'} >Application completed successful!</Tost>}
+              {error && <Tost variant={'danger'} >{error}</Tost>}
                    <Table striped bordered hover responsive className={show ? 'table-sm inactive':'table-sm'}>
                 <thead>
                     <tr>
@@ -209,7 +241,7 @@ const Part5=()=>{
 
                 </tbody>
             </Table>
-            <Payment price={price} show={show} setShow={setShow} state={state}/>
+            <Payment  show={show} setShow={setShow} state={state}/>
         </Container>
     )
 }

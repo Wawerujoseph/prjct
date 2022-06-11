@@ -21,7 +21,8 @@ import Part4 from './screens/Part4';
 import Part5 from './screens/Part5';
 import ApplicationScreen from './screens/ApplicationScreen';
 import ApplicationDetailScreen from './screens/ApplicationDetailScreen';
-
+import Requirements from './screens/Requirements';
+import Payment from './components/Payment';
 
 // "proxy": "http://127.0.0.1:8000",
 
@@ -47,6 +48,8 @@ function App() {
           <Route  path="/profile" element={<UserProfileScreen/>}/>
 
           <Route path='/instructions' element={<Instructions/>}/>
+          <Route path='/requirements' element={<Requirements/>}/>
+          <Route path='/payment' element={<Payment/>}/>
           <Route path='/part1' element={<Part1/>}/>
           <Route path='/part2' element={<Part2/>}/>
           <Route path='/part3' element={<Part3/>}/>

@@ -61,10 +61,10 @@ const Part2Details=()=>{
     // console.log(state2)
     // console.log(part2)
     useEffect(()=>{
+        if(!part2 || !success){
         dispatch({type:PART2_GET_RESET})
         dispatch(getPart2(params.user))
-        console.log(part2)
-        if(part2?.length > 0){
+        }else{
             setState1({
                 "name":part2[0].name,
                 "division":part2[0].division,
@@ -86,7 +86,7 @@ const Part2Details=()=>{
                 "email":part2[1].email,
             })
         }
-    },[dispatch,params.user,state1,state2])
+    },[params.user])
 
 
     return(

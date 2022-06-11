@@ -74,10 +74,11 @@ const Part1Details=()=>{
     })
 }  
        useEffect(()=>{
-        dispatch({type:PART1_GET_RESET})
-        dispatch(getPart1(params.user));
+         if(!part1 || !success){
+           dispatch({type:PART1_GET_RESET})
+           dispatch(getPart1(params.user));
 
-        if(part1 && success && !loading){
+         }else{
         setState({
             "name":part1.name,
             "birthPlace":part1.birthPlace,
@@ -124,7 +125,7 @@ const Part1Details=()=>{
         })
       }
     
-       },[dispatch,params.user,state])
+       },[params.user])
  
       // console.log(state)
 

@@ -205,3 +205,25 @@ def getMyPart5(request,user):
     part5 = Part5.objects.filter(user=user)[0]
     serializer = MYPart5Serializer(part5, many=False)
     return Response(serializer.data)
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def updatePart5ToPaid(request, pk):
+    part5 = Part5.objects.get(id=pk)
+    part5.isPaid = True
+    part5.paidAt = datetime.now()
+    part5.status= "processing"
+    part5.save()
+
+    return Response("Order was paid")
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def updatePart5ToDelivered(request, pk):
+    part5 = Part5.objects.get(id=pk)
+    part5.isDelivered = True
+    part5.deliveredAt = datetime.now()
+    part5.save()
+
+    return Response("Order was Delivered")

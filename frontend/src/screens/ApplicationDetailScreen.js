@@ -8,7 +8,7 @@ import Part1Details from "../components/Part1Details"
 import Part2Details from "../components/Part2Details"
 import Part3Details from "../components/Part3Details"
 import Part4Details from "../components/Part4Details"
-
+import Part5Details from "../components/Part5Details"
 
 const ApplicationDetailScreen=()=>{
     const [step,setStep]=useState("step1");    
@@ -20,6 +20,7 @@ const ApplicationDetailScreen=()=>{
           {step === "step2" && (<Part2Details />)}
           {step === "step3" && (<Part3Details />)}
           {step === "step4" && (<Part4Details />)}
+          {step === "step5" && (<Part5Details />)}
         </Container>
     )
 }
