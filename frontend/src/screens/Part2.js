@@ -8,6 +8,8 @@ import EContactForm from "../components/EContactForm";
 import { useState,useEffect } from "react";
 import Message from "../components/Message"
 import Tost from "../components/Tost"
+import { getPart2 } from "../actions/partsAction";
+import { PART2_GET_RESET } from "../constants/partsContants";
 
 
 
@@ -16,6 +18,12 @@ const Part2=()=>{
     const dispatch=useDispatch()
     const part2Create=useSelector(state=>state.part2Create)
     const {part2,error,success}=part2Create;
+
+    const Mypart2=useSelector((state)=>state.part2);
+    const {part2:mypart2,loading}=Mypart2;
+
+    const  userLogin=useSelector(state=>state.userLogin)
+     const {userInfor} =userLogin;
 
     const [state1,setState1]=useState({
         "name":"",
@@ -65,6 +73,8 @@ const Part2=()=>{
         if(success){
             navigate("/part3") 
         }
+        dispatch({type:PART2_GET_RESET})
+        dispatch(getPart2(userInfor._id));
     },[success])
 
     const submitHandler=(e)=>{
@@ -96,8 +106,11 @@ const Part2=()=>{
 
 
          
+            {!mypart2 ?(
             <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            ) :(
             <Button onClick={()=>navigate("/part3")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
+            )}
 
         </>
     )

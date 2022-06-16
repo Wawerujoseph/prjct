@@ -2,13 +2,14 @@ import FormContainer from "../components/FormContainer"
 import ApplicationSteps from "../components/ApplicationSteps"
 import { Button,Card,CardGroup,Row,Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
-import ImageUploader from "react-images-upload";
 import ImageUploading from 'react-images-uploading';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Message from "../components/Message"
 import {createPart4} from "../actions/partsAction"
 import {useSelector,useDispatch} from "react-redux"
 import Tost from "../components/Tost"
+import { getPart4 } from "../actions/partsAction";
+import { PART4_GET_RESET } from "../constants/partsContants"
 
 
 
@@ -21,6 +22,13 @@ const Part4=()=>{
     const dispatch=useDispatch()
     const part4Create=useSelector(state=>state.part4Create)
     const {part4,error,success}=part4Create;
+
+    const Mypart4=useSelector((state)=>state.part4);
+    const {part4:mypart4,loading}=Mypart4;
+
+    const  userLogin=useSelector(state=>state.userLogin)
+     const {userInfor} =userLogin;
+   
   
 
     const maxNumber = 5;
@@ -39,6 +47,10 @@ const Part4=()=>{
          setRImages(imageList);
       };
  
+      useEffect(()=>{
+        dispatch({type:PART4_GET_RESET})
+        dispatch(getPart4(userInfor._id));
+      },[])
 
     const submitHandler=async (e)=>{
         e.preventDefault() 
@@ -60,7 +72,7 @@ const Part4=()=>{
 
         if(success){
           navigate("/part5") 
-        }
+        }      
 
       }
     return(
@@ -99,18 +111,7 @@ const Part4=()=>{
             {success && <Tost variant={'success'} >Part4 Details Submited successful!</Tost>}
             {error && <Tost variant={'danger'} >{error}</Tost>}
               </Row>
-            
-            {/* <div>
-            <ImageUploader
-            withIcon={false}
-            withPreview={true}
-            buttonText="Choose images"
-            onChange={onDrop}
-            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-            maxFileSize={5242880}
-            />        
-            </div>   */}
-          
+              
 
             <div className="">
                 <ImageUploading
@@ -253,9 +254,11 @@ const Part4=()=>{
                 </ImageUploading>
                 </div>
                 
+                {!mypart4 ?(
             <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            ) :(
             <Button onClick={()=>navigate("/part5")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
-
+            )}
         </>
     )
     

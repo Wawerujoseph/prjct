@@ -8,6 +8,9 @@ import DatePicker from 'react-date-picker';
 import React, { useState,useEffect } from 'react';
 import Message from "../components/Message"
 import Tost from "../components/Tost"
+import { getPart1 } from "../actions/partsAction";
+import { PART1_GET_RESET } from "../constants/partsContants";
+
 
 
 const Part1=()=>{
@@ -15,6 +18,12 @@ const Part1=()=>{
     const dispatch=useDispatch()
     const part1Create=useSelector(state=>state.part1Create)
     const {part1,error,success}=part1Create;
+
+    const Mypart1=useSelector((state)=>state.part1);
+    const {part1:mypart1,loading}=Mypart1;
+
+    const  userLogin=useSelector(state=>state.userLogin)
+     const {userInfor} =userLogin;
 
     const [value, onChange] = useState(new Date());
     const [state,setState]=useState({
@@ -79,6 +88,9 @@ const Part1=()=>{
     if(success){
         navigate("/part2") 
     }
+    dispatch({type:PART1_GET_RESET})
+    dispatch(getPart1(userInfor._id));
+
   },[success])
 
     const submitHandler=(e)=>{
@@ -700,8 +712,11 @@ const Part1=()=>{
               
                 </Col>
             </Row>
+            {!mypart1 ?(
             <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            ) :(
             <Button onClick={()=>navigate("/part2")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
+            )}
         </>
     )
 }

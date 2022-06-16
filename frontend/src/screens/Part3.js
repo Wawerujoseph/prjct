@@ -7,6 +7,8 @@ import {useDispatch,useSelector} from "react-redux"
 import { useEffect, useState } from "react";
 import Message from "../components/Message"
 import Tost from "../components/Tost"
+import { getPart3 } from "../actions/partsAction";
+import { PART3_GET_RESET } from "../constants/partsContants"
 
 
 const Part3=()=>{
@@ -14,6 +16,12 @@ const Part3=()=>{
     const dispatch=useDispatch()
     const part3Create=useSelector(state=>state.part3Create)
     const {part3,error,success}=part3Create;
+
+    const Mypart3=useSelector((state)=>state.part3);
+    const {part3:mypart3,loading}=Mypart3;
+
+    const  userLogin=useSelector(state=>state.userLogin)
+     const {userInfor} =userLogin;
 
     const [state,setState]=useState({
         "name":"",
@@ -39,6 +47,8 @@ const Part3=()=>{
         if(success){
             navigate("/part4") 
         }
+        dispatch({type:PART3_GET_RESET})
+        dispatch(getPart3(userInfor._id));
     },[success])
 
     const submitHandler=(e)=>{
@@ -172,9 +182,11 @@ const Part3=()=>{
             </Row>
        
            
-           <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
-           <Button onClick={()=>navigate("/part4")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
-
+            {!mypart3 ?(
+            <Button onClick={submitHandler} type="submit" variant='primary' className="my-3" >Submit</Button>
+            ) :(
+            <Button onClick={()=>navigate("/part4")} type="submit" variant='primary' className="my-3 mx-2" >Continue</Button>
+            )}
         </>
     )
     
