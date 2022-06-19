@@ -14,4 +14,10 @@ urlpatterns = [
     path("get_part5/", getPart5, name="part5-get"),
     path("get_my_part5/<str:user>/", getMyPart5, name="part5-my-get"),
 
+
+    path("lipa/online",lipa_na_mpesa_online,name="lipa"),
+    path("access/token",getAccessToken,name="access_token"),
+
+    path("<str:pk>/pay/",updatePart5ToPaid,name="payUpdate")
+
 ]

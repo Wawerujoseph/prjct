@@ -141,7 +141,11 @@ const UserProfileScreen = () => {
                     <td>{user.name}</td>
                     <td>{mypart5?.createdAt.substring(0,10)}</td>
                     <td>
-                    <i className='fas fa-check' style={{color:'red'}}></i>
+                        {mypart5?.isPaid ? (
+                            mypart5.paidAt.substring(0,10)
+                            ):(
+                            <i className='fas fa-check' style={{color:'red'}}></i>
+                            )}
                     </td>
                     <td>
                         {mypart5?.status}

@@ -6,6 +6,16 @@ from ..models import Part1,Part2,Part3,Part4,Part5
 from ..serializer import Part1Serializer,Part2Serializer,Part3Serializer,Part4Serializer,Part5Serializer,MYPart5Serializer
 from rest_framework import status
 
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+
+from datetime import datetime
+
+
 
 
 @api_view(["POST"])
@@ -207,7 +217,6 @@ def getMyPart5(request,user):
     return Response(serializer.data)
 
 @api_view(["PUT"])
-@permission_classes([IsAuthenticated])
 def updatePart5ToPaid(request, pk):
     part5 = Part5.objects.get(id=pk)
     part5.isPaid = True
@@ -227,3 +236,43 @@ def updatePart5ToDelivered(request, pk):
     part5.save()
 
     return Response("Order was Delivered")
+
+
+
+def getAccessToken(request):
+    consumer_key = 'sWtdQkVx8Aac3raWt1TinTJiDLjGOYBQ'
+    consumer_secret = 'EbRzzlofoiJBqNoO'
+    api_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+
+    r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+    mpesa_access_token = json.loads(r.text)
+    validated_mpesa_access_token = mpesa_access_token['access_token']
+
+    return HttpResponse(validated_mpesa_access_token)
+
+@api_view(["POST"])
+def lipa_na_mpesa_online(request):
+    data=request.data
+    phone=int(data['phone'])
+    amount=int(data['amount'])
+    print(phone,amount)
+    access_token = MpesaAccessToken.validated_mpesa_access_token
+    api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    headers = {"Authorization": "Bearer %s" % access_token}
+    request = {
+        "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
+        "Password": LipanaMpesaPpassword.decode_password,
+        "Timestamp": LipanaMpesaPpassword.lipa_time,
+        "TransactionType": "CustomerPayBillOnline",
+        "Amount": amount,
+        "PartyA": phone,  # replace with your phone number to get stk push
+        "PartyB": LipanaMpesaPpassword.Business_short_code,
+        "PhoneNumber": data['phone'],  # replace with your phone number to get stk push
+        "CallBackURL": "https://sandbox.safaricom.co.ke/mpesa/",
+        "AccountReference": "SharkzTech",
+        "TransactionDesc": "Testing stk push"
+    }
+
+    response = requests.post(api_url, json=request, headers=headers)
+
+    return Response('success')

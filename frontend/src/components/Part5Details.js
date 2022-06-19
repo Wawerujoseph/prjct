@@ -8,6 +8,8 @@ import Loader from '../components/Loader';
 import Payment from "./Payment";
 
 const Part5Details=()=>{
+  const [phone,setPhone]=useState(0);
+
     const dispatch=useDispatch();
     const navigate=useNavigate()
     const params=useParams();   
@@ -69,8 +71,28 @@ return(
                     </ListGroup.Item>
                     <ListGroup.Item>
                      Applied At:   {mypart5.createdAt.substring(0,10)}
-                    </ListGroup.Item >
+                    </ListGroup.Item >                
+         
+
                     {!mypart5.isPaid ? (
+                    <>
+
+                   <ListGroup.Item>
+                    <Form.Group   controlId='name'>
+                    <Form.Label>
+                      Phone Number You want to Pay From
+                    </Form.Label>
+                    <Form.Control
+                    required
+                    type="number"
+                    placeholder="eg:254790454320" 
+                    name="phone"
+                    value={phone != 0 && phone}
+                    onChange={(e)=>setPhone(e.target.value)}              
+                    ></Form.Control>
+                  </Form.Group> 
+                  </ListGroup.Item>
+
                     <ListGroup.Item className="d-grid">
                     <Button
                     type="button"
@@ -78,6 +100,7 @@ return(
                     onClick={payHandler}
                     >Pay</Button>
                     </ListGroup.Item>
+                    </>
                     ):(
                     <ListGroup.Item>
                         {mypart5.paidAt?.substring(0,10)}
@@ -99,7 +122,7 @@ return(
 
             </Row> 
             </div>
-            <Payment show={show} setShow={setShow} state={state}/>
+            <Payment show={show} setShow={setShow} state={state} phone={phone} id={mypart5?.id}/>
     </Container>
 )
 }

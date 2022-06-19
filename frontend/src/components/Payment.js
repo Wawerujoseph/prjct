@@ -1,15 +1,16 @@
-import { Button, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, ListGroup, Row,Form } from "react-bootstrap";
 import FormContainer from "./FormContainer";
 import {useNavigate} from "react-router-dom";
 import { useDispatch,useSelector} from "react-redux"
 import {createPart5} from "../actions/partsAction"
 import Message from "../components/Message"
 import Tost from "../components/Tost"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
-const Payment=({setShow,show,state})=>{
+const Payment=({setShow,show,state,phone,id})=>{
     const navigate=useNavigate();
     const dispatch=useDispatch();  
 
@@ -17,12 +18,41 @@ const Payment=({setShow,show,state})=>{
     const {part5,error,success}=part5Create;
 
     const handleClick=()=>{
-        setShow(false);
+        // setShow(false);
         // navigate("/");
     }
     const closeHandler=()=>{
         setShow(false);
     }
+    const Lipa=async ()=>{
+
+      const _data={
+          phone:phone,
+          amount:state?.amount.substring(4)
+      }
+
+      const  userLogin=useSelector(state=>state.userLogin)
+      const {userInfor} =userLogin
+      
+       const config={
+           headers:{
+            'Content-type':'application/json',
+            Authorization:`Bearer ${userInfor.token}`
+           }
+       }
+       const {data}=await axios.post(`http://127.0.0.1:8000/parts/lipa/online`,_data,config) 
+
+       if(data=== "success"){
+         const {data}= await axios.put(`http://127.0.0.1:8000/parts/${id}/pay/`,config)
+         console.log(data)
+       }      
+    
+    }
+
+    Lipa()        
+  
+  
+
     return(
         <FormContainer>
             <div className={show ? "payment-container active" : "payment-container"}>
@@ -47,11 +77,13 @@ const Payment=({setShow,show,state})=>{
                 </ListGroup>
                 </Col>
                 <Col>
+
+             
               
                <div>
-                   <p>Pay {state?.amount}</p>
-                   <p>Pay Pill 55555</p>
-                   <p>A/c name Your email</p>
+                   <p>Check Your phone</p>
+                   <p>And Enter PIN </p>
+                   <p>to complete the transcation</p>
                </div>
                <Button onClick={handleClick}>Complete</Button>          
                 </Col>

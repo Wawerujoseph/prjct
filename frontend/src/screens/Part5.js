@@ -41,7 +41,7 @@ const Part5=()=>{
             "number_pages":"",
             "amount":"",
         });
-        setShow(true);
+        // setShow(true);
 
         if(mypart5){
             setState({
@@ -49,6 +49,7 @@ const Part5=()=>{
                 "number_pages":mypart5.number_pages,
                 "amount":mypart5.amount
             });
+            navigate("/profile")
         }else{     
 
         if(num === 1.0){
@@ -56,14 +57,14 @@ const Part5=()=>{
         setState({
                 "type":"Ordinary Passports",
                 "number_pages":"A Series (34 pages)",
-                "amount":"Ksh. 4,550.00",
+                "amount":"Ksh. 4550",
             });
             
         }else if(num === 1.1){
             setState({
                 "type":"Ordinary Passports",
                 "number_pages":"B Series (30 pages)",
-                "amount":"Ksh. 6,050.00",
+                "amount":"Ksh. 6050",
             });
 
 
@@ -71,35 +72,35 @@ const Part5=()=>{
             setState({
                 "type":"Ordinary Passports",
                 "number_pages":"C Series (66 pages)",
-                "amount":"Ksh. 4,550.00",
+                "amount":"Ksh. 4550",
             });
 
         }else if(num ===2){
             setState({
                 "type":"Diplomatic passports",
                 "number_pages":"",
-                "amount":"Ksh. 7,550.00",
+                "amount":"Ksh. 7550",
             });
 
         }else if(num ===3){
             setState({
                 "type":"Mutilated passport",
                 "number_pages":"",
-                "amount":"Ksh. 7,550.00",
+                "amount":"Ksh. 7550",
             });
 
         }else if(num ===4){
             setState({
                 "type":"Lost passports",
                 "number_pages":"",
-                "amount":"Ksh. 12,050.00",
+                "amount":"Ksh. 12050",
             });
 
         }else if(num ===5){
             setState({
                 "type":"Certificate of Identity (for Foreigners",
                 "number_pages":"",
-                "amount":"Ksh. 3,050.00",
+                "amount":"Ksh. 3050",
             });
 
         }else if(num ===6){
@@ -117,7 +118,8 @@ const Part5=()=>{
         if(state){
             dispatch(createPart5(state));
             if(success){
-                setShow(true)
+                // setShow(true)
+                navigate("/profile")
             }
 
         }
