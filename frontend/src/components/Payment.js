@@ -18,7 +18,7 @@ const Payment=({setShow,show,state,phone,id})=>{
     const {part5,error,success}=part5Create;
 
     const handleClick=()=>{
-        // setShow(false);
+        setShow(false);
         // navigate("/");
     }
     const closeHandler=()=>{
